@@ -1,12 +1,12 @@
 import pandas as pd
 import string, re
-import random
 import numpy as np
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from scipy import sparse
 from sklearn.model_selection import train_test_split
 import gzip
 from sklearn.linear_model import LogisticRegression
+import time
 
 # Read Data
 def parse(path):
@@ -27,6 +27,7 @@ df = getDF('./DATA/reviews_Electronics_5.json.gz')
 
 # NBSVM
 
+begin_time = time.time()
 # a random seed preset for train test splitting
 X_train, X_test = train_test_split(df.loc[:, ['overall', 'reviewText']], test_size=0.3, random_state=123)
 
@@ -103,3 +104,7 @@ tmp = tmp_preds * stars
 
 from sklearn.metrics import mean_squared_error
 mean_squared_error(X_test['overall'], tmp)
+
+end_time = time.time()
+
+print(end_time-begin_time)
