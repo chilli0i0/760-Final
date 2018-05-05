@@ -8,23 +8,10 @@ import gzip
 from sklearn.linear_model import LogisticRegression
 import time
 
-# Read Data
-def parse(path):
-  g = gzip.open(path, 'rb')
-  for l in g:
-    yield eval(l)
 
-def getDF(path):
-  i = 0
-  df = {}
-  for d in parse(path):
-    df[i] = d
-    i += 1
-  return pd.DataFrame.from_dict(df, orient='index')
-
-df = getDF('./DATA/reviews_Electronics_5.json.gz')
-
-trainsize = [50000, 100000, 500000, 1000000, 1300000]
+df = pd.read_csv('./DATA/amazon_cleaned.csv')
+df = df.dropna(axis=0,how="any")
+df = df.reset_index(drop=True)
 
 
 # NBSVM
@@ -118,6 +105,8 @@ full_mem_usage = []
 # full_runtime = []
 # full_mse = []
 
+trainsize = [50000, 100000, 500000, 1000000, 1300000]
+
 for size in trainsize:
     print('Current size used:', size)
     mem_usage = memory_usage(f)
@@ -126,16 +115,7 @@ for size in trainsize:
     print('Maximum memory usage: %s' % max(mem_usage))
 
 
-# # manually... this code chunk works
-# size = trainsize[0]
-# print('Current size used:', size)
-# mem_usage = memory_usage(f)
-# print('End memory check')
-# full_mem_usage.append(mem_usage)
-# print('Memory usage (in chunks of .1 seconds): %s' % mem_usage)
-# print('Maximum memory usage: %s' % max(mem_usage))
-
-
+# write results (memory)
 for i in range(5):
     thefile = open('nbsvm_new'+str(i)+'.txt', 'w')
     for item in full_mem_usage[i]:
