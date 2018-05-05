@@ -139,3 +139,7 @@ for size in trainsize:
 # print('Maximum memory usage: %s' % max(mem_usage))
 
 
+for i in range(5):
+    thefile = open('nbsvm'+str(i)+'.txt', 'w')
+    for item in full_mem_usage[i]:
+        thefile.write("%s\n" % item)
