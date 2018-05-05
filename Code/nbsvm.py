@@ -24,12 +24,14 @@ def getDF(path):
 
 df = getDF('./DATA/reviews_Electronics_5.json.gz')
 
+trainsize = [50000, 100000, 500000, 1000000, 1300000]
+
 
 # NBSVM
 def f():
     begin_time = time.time()
     # a random seed preset for train test splitting
-    X_train, X_test = train_test_split(df.loc[:, ['overall', 'reviewText']], train_size=100000, test_size=300000,
+    X_train, X_test = train_test_split(df.loc[:, ['overall', 'reviewText']], train_size=size, test_size=300000,
                                        random_state=123)
 
 
@@ -104,15 +106,36 @@ def f():
 
 
     from sklearn.metrics import mean_squared_error
-    print(mean_squared_error(X_test['overall'], tmp))
+    mse = mean_squared_error(X_test['overall'], tmp)
+    print(mse)
 
     end_time = time.time()
-
-    print(end_time-begin_time)
+    runtime = end_time-begin_time
+    print(runtime)
+    return runtime, mse
 
 
 from memory_profiler import memory_usage
 
-mem_usage = memory_usage(f)
-print('Memory usage (in chunks of .1 seconds): %s' % mem_usage)
-print('Maximum memory usage: %s' % max(mem_usage))
+full_mem_usage = []
+full_runtime = []
+full_mse = []
+
+for size in trainsize:
+    print('Current size used:', size)
+    mem_usage = memory_usage(f)
+    full_mem_usage.append(mem_usage)
+    print('Memory usage (in chunks of .1 seconds): %s' % mem_usage)
+    print('Maximum memory usage: %s' % max(mem_usage))
+
+
+# # manually... this code chunk works
+# size = trainsize[0]
+# print('Current size used:', size)
+# mem_usage = memory_usage(f)
+# print('End memory check')
+# full_mem_usage.append(mem_usage)
+# print('Memory usage (in chunks of .1 seconds): %s' % mem_usage)
+# print('Maximum memory usage: %s' % max(mem_usage))
+
+
