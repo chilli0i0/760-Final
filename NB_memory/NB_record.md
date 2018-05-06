@@ -1,4 +1,4 @@
-# NB
+# NB_NEW
 
 MSE Time (sec) Max memory usage (MB)
 
@@ -21,3 +21,28 @@ MSE Time (sec) Max memory usage (MB)
 ## 1300000
 
 1.0323966666666666  269.718519449234 Maximum memory usage: 8056.6328125
+
+# NB
+
+MSE Time (sec) Max memory usage (MB)
+
+## 50000
+
+1.0439866666666666  83.33110427856445   Maximum memory usage: 3934.06640625
+
+## 100000
+
+0.9953933333333334   99.85633492469788 Maximum memory usage: 4130.7109375
+
+## 500000
+
+0.9796866666666667 240.28191924095154 Maximum memory usage: 5563.7578125
+
+## 1000000
+
+1.00215 379.5233881473541 Maximum memory usage: 8241.3125
+
+## 1300000
+
+1.0139866666666666  479.7275142669678 Maximum memory usage: 9699.23046875
+
