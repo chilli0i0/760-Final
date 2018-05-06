@@ -117,6 +117,6 @@ for size in trainsize:
 
 # write results (memory)
 for i in range(5):
-    thefile = open('nbsvm_new'+str(i)+'.txt', 'w')
+    thefile = open('nbsvm_new_clean'+str(i)+'.txt', 'w')
     for item in full_mem_usage[i]:
         thefile.write("%s\n" % item)
