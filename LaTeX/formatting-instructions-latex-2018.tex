@@ -8,6 +8,7 @@
 \usepackage{url}  %Required
 \usepackage{graphicx}  %Required
 \usepackage{caption}
+\usepackage{amsmath}
 \frenchspacing  %Required
 \setlength{\pdfpagewidth}{8.5in}  %Required
 \setlength{\pdfpageheight}{11in}  %Required
@@ -28,20 +29,18 @@ Madison, Wisconsin 53715-1007\\
 }
 \maketitle
 \begin{abstract}
-This project tends to compare multiple model in sentiment analysis domain based on Amazon reviews. As a result...
-In this part, we will explore how deep neural network model with a long short time memory(LSTM) layer works for our data. 
-Firstly, we learn the architecture of the model. It is very hard to learn the structure of the model, especially for deep learning model. So, in this project, we just use the simplest structure: one word embedding layer, one LSTM layer and one full connection layer to output the prediction. 
-Parameter tuning part could be very crucial to this method. But we do not have enough time to do parameter tuning for all sample sizes. So, we only do parameter tuning for size = 100000 and use this setup for all sizes. This may affect the accuracy of our models.
+This project tends to compare multiple models in sentiment analysis domain based on Amazon reviews. We run the experiment for LogisticRegression, NaiveBayes, SVM, NBSVM, XGBoost and LSTM on same kind of dataset to compare running time, memory usage and accuracy. As a result.....
+
 \end{abstract}
 \section{Introduction}
 \subsection{Background}
 importance of sentiment, existing method, compare to find, 
-In this part, we will explore how deep neural network model with a long short time memory(LSTM) layer works for our data. 
-Firstly, we learn the architecture of the model. It is very hard to learn the structure of the model, especially for deep learning model. So, in this project, we just use the simplest structure: one word embedding layer, one LSTM layer and one full connection layer to output the prediction. 
-Parameter tuning part could be very crucial to this method. But we do not have enough time to do parameter tuning for all sample sizes. So, we only do parameter tuning for size = 100000 and use this setup for all sizes. This may affect the accuracy of our models.
+Nowadays, what people think is of great concern. Fortunately, with the growth of available opinion-rich resources, such as online review and blogs, and along with new technologies, such as machine learning and sentiment analysis, we are able to extract information from these resources and understand the opinions of others. However, it's not a easy task, as we have to teach machines to do what human brains do to understand others' comments.
+
+This project tends to compare multiple popular models used in sentiment analysis based on Amazon reviews. We will compare the running time, memory usage and accuracy of each model to find out when, where and which model fits best. 
 \subsection{Data Introduction}
-We get our data from Dr. Julian McAuley?s Amazon dataset. The dataset contains product reviews and metadata from Amazon, including 142.8 million reviews spanning May 1996 - July 2014.The dataset includes reviews (ratings, text, helpfulness votes), product metadata (descriptions, category information, price, brand, and image features), and links (also viewed/also bought graphs). \par
-For our project, we choose the data only for electronics, which contains 1689188 reviews. Since our project focus on text classification. We only keep the review texts and ratings in the data. Here is an example of the data.\par
+We get our data from Dr. Julian McAuley's Amazon dataset. The dataset contains product reviews and metadata from Amazon, including 142.8 million reviews spanning May 1996 - July 2014.The dataset includes reviews (ratings, text, helpfulness votes), product metadata (descriptions, category information, price, brand, and image features), and links (also viewed/also bought graphs). \par
+For our project, we choose the data only for electronics, which contains 1689188 reviews. Since our project focus on text classification. We only keep the review texts and ratings in the data. Table 1 is an example of the data.\par
 \begin{table}[htb]
 \caption{Example of Amazon Review Data} % title of Table
 \resizebox{\columnwidth}{!}{
@@ -58,18 +57,19 @@ Index & Rating & Review \\ [0.5ex] % inserts table
 
 \subsection{Experiment Design}
 
-we will balla a dss asd asda
-In this part, we will explore how deep neural network model with a long short time memory(LSTM) layer works for our data. 
-Firstly, we learn the architecture of the model. It is very hard to learn the structure of the model, especially for deep learning model. So, in this project, we just use the simplest structure: one word embedding layer, one LSTM layer and one full connection layer to output the prediction. 
-Parameter tuning part could be very crucial to this method. But we do not have enough time to do parameter tuning for all sample sizes. So, we only do parameter tuning for size = 100000 and use this setup for all sizes. This may affect the accuracy of our models.
+First, we clean the data set and extract the train and test set from cleaned data. Then each model will use same train and test set, measure the running time and memory usage of model and use the same criterion to calculate the accuracy. Finally we will do comparison between all the models and summarize the findings.
 
 \section{Model Description}
 
 \subsection{Logistic Regression}
 
+multinomial logistic regression is a classification method that generalizes logistic regression to multiclass problems, i.e. with more than two possible discrete outcomes. That is, it is a model that is used to predict the probabilities of the different possible outcomes of a categorically distributed dependent variable, given a set of independent variables (which may be real-valued, binary-valued, categorical-valued, etc.).
+
+Multinomial logistic regression is known by a variety of other names, including polytomous LR, multiclass LR, softmax regression, multinomial logit, maximum entropy (MaxEnt) classifier, conditional maximum entropy model.
+
 \subsection{Naive Bayes}
 
-Naive Bayes is a baseline algorithm to tackle the text classification and sentiment analysis problem. Its simplexity and robust makes it popular in the text processing domain. The critical function in Naive bayes is as follows: 
+Naive Bayes is a baseline algorithm to tackle the text classification and sentiment analysis problem. Its simplexity and robust makes it popular in the text processing domain. The critical function in Naive bayes is as follows: \cite{pedregosa2011scikit}
 $$p(y|x_1,...,x_n) = \frac{p(y)\prod_i p(x_i|y)}{p(x_1,...,x_n)}$$
 Problem here is to figure out the value of $p(x_i|y)$ from samples. There are two common ways to do this.
 \subsubsection{Gaussian Naive Bayes}
@@ -94,13 +94,13 @@ SVM is another baseline algorithm for the sentiment analysis tasks. The tricky p
 
 \subsection{NBSVM}
 
-NB-SVM is a powerful algorithm introduced by Sida Wang and Christopher D. Manning(2012), which is designed to tackle the sentiment and topic classification tasks. It's now one of the most popular algorithms used in Kaggle community for the text calssification competitions.
+NB-SVM is a powerful algorithm introduced by Sida Wang and Christopher D. Manning(2012)\cite{wang2012baselines}, which is designed to tackle the sentiment and topic classification tasks. It's now one of the most popular algorithms used in Kaggle community for the text calssification competitions.
 
 The intuitive insight for NB-SVM is that NB beats the SVM for short snippet sentiment task while SVM performs better for longer documents. Thus by combining these two baseline algorithms together, NB-SVM inherits both advantages for NB and SVM and outperforms most published algorithm in the sentiment analysis domain.
 
 The process for NB-SVM is to firstly extract the NB features, then use them to fit the SVM model. The SVM model here can be replaced by other calssification methods, like logistic regression model etc..
 
-The technical details about this algorithm is shown as follows$^{[2]}$(binary classification problem with $y=(1,-1)$).
+The technical details about this algorithm is shown as follows\cite{lebret2014n}(binary classification problem with $y=(1,-1)$).
 
 Suppose $D = (d_1,d_2,...,d_n)$ is a set of text documents and each text documents $d_i$ contains a set of n-grams. We denote ngm = $(ngm_1,ngm_2,..,ngm_N)$ as the set of count vectors for all n-grams extracted from $D$. $ngm^i_t$ represents the number of occurence of $t$th n-gram in document i. Defining $p = 1+\sum_{i:y_i=1}ngm^i$ and $q=1+\sum_{i:y_i=-1}ngm^i$. To determine how important n-grams are for the classes y, defining the log ratio $r$:
 
@@ -169,7 +169,7 @@ The second one is bag-of-word method. In this method, we just keep top 50000 fre
 \resizebox{\columnwidth}{!}{
 \begin{tabular}{ccccc} % centered columns (4 columns)
 \hline %inserts double horizontal lines
-Index & Word1 & Word2 & ... & Word50000 \\ [0.5ex] % inserts table
+Index & $\text{Word}_1$ & $\text{Word}_2$ & ... & $\text{Word}_{50000}$ \\ [0.5ex] % inserts table
 %heading
 \hline % inserts single horizontal line
 1 & 0.2312 & 0.1983 & ... & 0.7823 \\ [1ex] % [1ex] adds vertical space
@@ -186,7 +186,7 @@ Index & Word1 & Word2 & ... & Word50000 \\ [0.5ex] % inserts table
 \resizebox{\columnwidth}{!}{
 \begin{tabular}{ccccc} % centered columns (4 columns)
 \hline %inserts double horizontal lines
-Index & Word1 & Word2 & ... & Word50000 \\ [0.5ex] % inserts table
+Index & $\text{Word}_1$ & $\text{Word}_2$ & ... & $\text{Word}_{50000}$ \\ [0.5ex] % inserts table
 %heading
 \hline % inserts single horizontal line
 1 & 1 & 0 & ... & 2 \\ [1ex] % [1ex] adds vertical space
@@ -244,5 +244,10 @@ From Figure cite[] and Figure [cite], which show the different performance of NB
 \includegraphics[width=\columnwidth]{NBSVM_runtime_sample.jpeg}
 \captionof{figure}{Runtime of cleaned and uncleaned dataset}
 \end{center}
+
+\bibliography{bibfile}
+\bibliographystyle{aaai}
+
+
 
 \end{document}
