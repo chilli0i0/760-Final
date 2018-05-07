@@ -112,11 +112,13 @@ logit = read.csv("./Logit_result/logit_result_clean.csv")
 
 # comparison between cleaned and uncleaned data
 # it is interesting that the cleaned data does worse
+jpeg("./Plots/NBSVM_unclean_clean.jpeg")
 plot(1:5,apply(mse_nbsvm,2,mean), type = 'b', main=NULL, xlab="Trainsize", ylab="MSE",
-     ylim = c(0.4,0.9), xaxt="n")
+     ylim = c(0.4,0.9), xaxt="n", lwd=2,cex.lab=1.2)
 axis(1, at=1:5, labels=size)
-lines(1:5,mse_nbsvm_clean, type = 'b', col="red", lty=2)
-legend("topright",legend=c("cleaned","uncleaned"), col=c("red","black"),lty=c(2,1))
+lines(1:5,mse_nbsvm_clean, type = 'b', col="red", lty=2, lwd=2)
+legend("topright",legend=c("cleaned","uncleaned"), col=c("red","black"),lty=c(2,1), lwd=2)
+dev.off()
 
 # plot(1:5,mse_nb, type = 'b', main="MSE on of NB different train size", xlab="Trainsize", ylab="MSE",
 #      ylim = c(0.4,1.2), xaxt="n")
@@ -125,11 +127,13 @@ legend("topright",legend=c("cleaned","uncleaned"), col=c("red","black"),lty=c(2,
 # legend("bottomright",legend=c("cleaned","uncleaned"), col=c("red","black"),lty=c(2,1))
 
 # runtime
+jpeg("./Plots/NBSVM_runtime_sample.jpeg")
 plot(1:5,apply(runtime_nbsvm,2,mean), type = 'b', main=NULL, xlab="Trainsize", 
-     ylim=c(50,2000), ylab="Time", xaxt="n")
+     ylim=c(50,2000), ylab="Time", xaxt="n", lwd=2,cex.lab=1.2)
 axis(1, at=1:5, labels=size)
-lines(1:5,runtime_nbsvm_clean, type = 'b', col="red", lty=2)
-legend("topleft",legend=c("cleaned","uncleaned"), col=c("red","black"),lty=c(2,1))
+lines(1:5,runtime_nbsvm_clean, type = 'b', col="red", lty=2, lwd=2)
+legend("topleft",legend=c("cleaned","uncleaned"), col=c("red","black"),lty=c(2,1), lwd=2)
+dev.off()
 
 # plot(1:5,runtime_nb, type = 'b', main="Runtime on of NB different train size", xlab="Trainsize", 
 #      ylim=c(50,2000), ylab="Time", xaxt="n")
@@ -153,24 +157,34 @@ lines(seq(0,1,length.out = dim(memory_nb)[1]),t(memory_nb))
 # comparison between different methods
 
 # mse
+jpeg("./Plots/Compare_mse.jpeg")
 plot(1:5,mse_nbsvm_clean, type = 'b', main=NULL, xlab="Trainsize", ylab="MSE",
-     ylim = c(0.3,1.5), xaxt="n")
+     ylim = c(0.3,1.5), xaxt="n", lwd=2,cex.lab=1.2)
 axis(1, at=1:5, labels=size)
-lines(1:5,mse_nb_clean, type = 'b', col="red", lty=2)
-lines(1:5,mse_lstm, type = 'b', col="deepskyblue2", lty = 3)
-lines(1:5,logit$MSE, type = 'b', col="darkblue", lty = 4)
+lines(1:5,mse_nb_clean, type = 'b', col="red", lty=2, lwd=2)
+lines(1:5,mse_lstm, type = 'b', col="deepskyblue2", lty = 3, lwd=2)
+lines(1:5,logit$MSE, type = 'b', col="darkblue", lty = 4, lwd=2)
 legend("topright",legend=c("LR","LSTM","NB","NBSVM"),
-       col=c("darkblue","deepskyblue2","red","black"),lty=c(4,3,2,1))
+       col=c("darkblue","deepskyblue2","red","black"),lty=c(4,3,2,1), lwd=2)
+dev.off()
+
+table = rbind(logit$MSE,mse_nb_clean,mse_nbsvm_clean,mse_lstm)
+rownames(table) = c("LR","NB","NBSVM","LSTM")
+colnames(table) = size
+
+write.csv(format(table,digits = 4),file = "./mse_table.txt")
 
 # time
+jpeg("./Plots/Compare_runtime.jpeg")
 plot(1:5,runtime_nbsvm_clean, type = 'b', main=NULL, xlab="Trainsize", 
-     ylim=c(50,15000), ylab="Time(s)", xaxt="n")
+     ylim=c(50,15000), ylab="Time(s)", xaxt="n", lwd=2,cex.lab=1.2)
 axis(1, at=1:5, labels=size)
-lines(1:5,runtime_nb_clean, type = 'b', col="red", lty=2)
-lines(1:5,runtime_lstm, type = 'b', col="deepskyblue2", lty = 3)
-lines(1:5,logit$Time.sec., type = 'b', col="darkblue", lty = 4)
+lines(1:5,runtime_nb_clean, type = 'b', col="red", lty=2, lwd=2)
+lines(1:5,runtime_lstm, type = 'b', col="deepskyblue2", lty = 3, lwd=2)
+lines(1:5,logit$Time.sec., type = 'b', col="darkblue", lty = 4, lwd=2)
 legend("topleft",legend=c("LR","NB","NBSVM","LSTM"),
-       col=c("darkblue","red","black","deepskyblue2"),lty=c(4,2,1,3))
+       col=c("darkblue","red","black","deepskyblue2"),lty=c(4,2,1,3), lwd=2)
+dev.off()
 
 table = rbind(logit$Time.sec.,runtime_nb_clean,runtime_nbsvm_clean,runtime_lstm)
 rownames(table) = c("LR","NB","NBSVM","LSTM")
@@ -179,14 +193,15 @@ colnames(table) = size
 write.csv(format(table,digits = 4),file = "./runtime_table.txt")
 
 # memory
+jpeg("./Plots/Compare_max_memory.jpeg")
 plot(1:5,max_memory_nbsvm_clean, type = 'b', main=NULL, xlab="Trainsize", 
-      ylab="Memory(MB)", xaxt="n",ylim = c(1000,12000))
+      ylab="Memory(MB)", xaxt="n",ylim = c(1000,12000), lwd=2,cex.lab=1.2)
 axis(1, at=1:5, labels=size)
-lines(1:5,max_memory_nb_clean, type = 'b', col="red", lty=2)
-lines(1:5,max_memory_lstm, type = 'b', col="deepskyblue2", lty = 3)
-lines(1:5,logit$Maximum.memory.usage, type = 'b', col="darkblue", lty = 4)
+lines(1:5,max_memory_nb_clean, type = 'b', col="red", lty=2, lwd=2)
+lines(1:5,max_memory_lstm, type = 'b', col="deepskyblue2", lty = 3, lwd=2)
+lines(1:5,logit$Maximum.memory.usage, type = 'b', col="darkblue", lty = 4, lwd=2)
 legend("topleft",legend=c("LR","NB","NBSVM","LSTM"),
-       col=c("darkblue","red","black","deepskyblue2"),lty=c(4,2,1,3))
-
+       col=c("darkblue","red","black","deepskyblue2"),lty=c(4,2,1,3), lwd=2)
+dev.off()
 
 
