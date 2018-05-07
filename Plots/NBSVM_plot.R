@@ -36,11 +36,18 @@ mse_nbsvm_clean = c(0.7540073401451344,
               0.6050078373744816,
               0.5703639850663288,
               0.5594166814458159)
+
 runtime_nbsvm_clean = c(62.340609073638916,
                   95.78064584732056,
                   416.80766677856445,
                   783.3386092185974,
                   1065.070950269699)
+
+max_memory_nbsvm_clean = c(3556.1328125,
+                           4016.16796875,
+                           4883.0625,
+                           6889.4453125,
+                           8415.2421875)
 
 # nb mse and runtime
 mse_nb_clean = c(1.17307,
@@ -55,18 +62,31 @@ runtime_nb_clean = c(39.61942267417908,
                219.24542045593262,
                269.718519449234)
 
+max_memory_nb_clean = c(3346.27734375,
+                        3552.890625,
+                        5202.78515625,
+                        7011.89453125,
+                        8056.6328125)
+
 mse_nb = c(1.0439866666666666,
-                 0.9953933333333334,
-                 0.9796866666666667,
-                 1.00215,
-                 1.0139866666666666)
+           0.9953933333333334,
+           0.9796866666666667,
+           1.00215,
+           1.0139866666666666)
 
 runtime_nb = c(83.33110427856445,
-                     99.85633492469788,
-                     240.28191924095154,
-                     379.5233881473541,
-                     479.7275142669678)
+               99.85633492469788,
+               240.28191924095154,
+               379.5233881473541,
+               479.7275142669678)
 
+max_memory_nb = c(3934.06640625,
+                  4130.7109375,
+                  5563.7578125,
+                  8241.3125,
+                  9699.23046875)
+
+# comparison between cleaned and uncleaned data
 # it is interesting that the cleaned data does worse
 plot(1:5,apply(mse_nbsvm,2,mean), type = 'b', main="MSE on of NBSVM different train size", xlab="Trainsize", ylab="MSE",
      ylim = c(0.4,1.2), xaxt="n")
@@ -94,11 +114,10 @@ lines(1:5,runtime_nb_clean, type = 'b', col="red", lty=2)
 legend("topleft",legend=c("cleaned","uncleaned"), col=c("red","black"),lty=c(2,1))
 
 # scaled memory usage
-
 memory_nbsvm1=(read.table("./NBSVM_memory/nbsvm0.txt",sep=","))
 memory_nbsvm2=read.table("./NBSVM_memory/nbsvm_new0.txt",sep=",")
-memory_nbsvm3=read.table("./NBSVM_memory/nbsvm_new_clean0.txt",sep=",")
-memory_nb=read.table("./NB_memory/nb0.txt",sep=",")
+memory_nbsvm_clean=read.table("./NBSVM_memory/nbsvm_new_clean0.txt",sep=",")
+memory_nb_clean=read.table("./NB_memory/nb0.txt",sep=",")
 
 plot(seq(0,1,length.out = dim(memory_nbsvm1)[1]),t(memory_nbsvm1), type = 'l', ylim = c(1500,5000),
      main="A strange example on two runs of memory\n with sample size of 50000",
@@ -106,4 +125,29 @@ plot(seq(0,1,length.out = dim(memory_nbsvm1)[1]),t(memory_nbsvm1), type = 'l', y
 lines(seq(0,1,length.out = dim(memory_nbsvm2)[1]),t(memory_nbsvm2))
 lines(seq(0,1,length.out = dim(memory_nbsvm3)[1]),t(memory_nbsvm3))
 lines(seq(0,1,length.out = dim(memory_nb)[1]),t(memory_nb))
+
+# comparison between different methods
+
+# mse
+plot(1:5,mse_nbsvm_clean, type = 'b', main="MSE on different train size", xlab="Trainsize", ylab="MSE",
+     ylim = c(0.4,1.2), xaxt="n")
+axis(1, at=1:5, labels=size)
+lines(1:5,mse_nb_clean, type = 'b', col="red", lty=2)
+legend("topright",legend=c("NB","NBSVM"), col=c("red","black"),lty=c(2,1))
+
+# time
+plot(1:5,runtime_nbsvm_clean, type = 'b', main="Runtime on different train size", xlab="Trainsize", 
+     ylim=c(50,2000), ylab="Time(s)", xaxt="n")
+axis(1, at=1:5, labels=size)
+lines(1:5,runtime_nb_clean, type = 'b', col="red", lty=2)
+legend("topleft",legend=c("NB","NBSBM"), col=c("red","black"),lty=c(2,1))
+
+# memory
+plot(1:5,max_memory_nbsvm_clean, type = 'b', main="Memory on different train size", xlab="Trainsize", 
+      ylab="Memory(MB)", xaxt="n")
+axis(1, at=1:5, labels=size)
+lines(1:5,max_memory_nb_clean, type = 'b', col="red", lty=2)
+legend("topleft",legend=c("NB","NBSVM"), col=c("red","black"),lty=c(2,1))
+
+
 
