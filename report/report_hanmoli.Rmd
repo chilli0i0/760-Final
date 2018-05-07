@@ -34,7 +34,12 @@ TODO: compare the above two Naive Bayes algoritms.
 
 # Support Vector Machine(SVM)
 
-SVM is another baseline algorithm for the sentiment analysis tasks. The tricky part for SVM is to choose a proper kernal. Here we tried several popular kernals and compared their model performances(shown in the following table).
+SVM is another baseline algorithm for the sentiment analysis tasks. The tricky part for SVM is to choose a proper kernal. Here we used the default setting of the 'SVC' function in $sklearn$ package. That is, using the radial basis function(rbf) kernel with $\gamma=3$. The specific mathmatic formula is as follows.
+
+$$exp(-\gamma ||x-x'||^2)$$
+
+A drawback for the SVM algorithm is its low efficiency, especially dealing with large samples. In the project, the number of instances is at least 50000, which is way too large for SVM(takes about 4 hours to finish). The mse is around 2.0, which means the SVM doesn't converge at all. Thus, we are confidence to claim that the SVM is not a proper algorithm for our sentiment analysis here.
+
 
 TODO: compare the performances for different SVM kernals.
 
@@ -62,7 +67,7 @@ TODO: compare the performance of NBSVM with other algorithms.
 
 [1]. Wang, Sida, and Christopher D. Manning. "Baselines and bigrams: Simple, good sentiment and topic classification." Proceedings of the 50th Annual Meeting of the Association for Computational Linguistics: Short Papers-Volume 2. Association for Computational Linguistics, 2012.
 
-[2]. Lebret, Rémi, and Ronan Collobert. "N-gram-based low-dimensional representation for document classification." arXiv preprint arXiv:1412.6277 (2014).
+[2]. Lebret, RÃ©mi, and Ronan Collobert. "N-gram-based low-dimensional representation for document classification." arXiv preprint arXiv:1412.6277 (2014).
 
 
 
