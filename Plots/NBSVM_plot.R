@@ -107,7 +107,7 @@ max_memory_lstm = c(4279.773438,
                     11828.60938)
 
 # logistic regression data
-logit = read.csv("./logit_result.csv")
+logit = read.csv("./Logit_result/logit_result_clean.csv")
 
 
 # comparison between cleaned and uncleaned data
@@ -118,11 +118,11 @@ axis(1, at=1:5, labels=size)
 lines(1:5,mse_nbsvm_clean, type = 'b', col="red", lty=2)
 legend("topright",legend=c("cleaned","uncleaned"), col=c("red","black"),lty=c(2,1))
 
-plot(1:5,mse_nb, type = 'b', main="MSE on of NB different train size", xlab="Trainsize", ylab="MSE",
-     ylim = c(0.4,1.2), xaxt="n")
-axis(1, at=1:5, labels=size)
-lines(1:5,mse_nb_clean, type = 'b', col="red", lty=2)
-legend("bottomright",legend=c("cleaned","uncleaned"), col=c("red","black"),lty=c(2,1))
+# plot(1:5,mse_nb, type = 'b', main="MSE on of NB different train size", xlab="Trainsize", ylab="MSE",
+#      ylim = c(0.4,1.2), xaxt="n")
+# axis(1, at=1:5, labels=size)
+# lines(1:5,mse_nb_clean, type = 'b', col="red", lty=2)
+# legend("bottomright",legend=c("cleaned","uncleaned"), col=c("red","black"),lty=c(2,1))
 
 # runtime
 plot(1:5,apply(runtime_nbsvm,2,mean), type = 'b', main=NULL, xlab="Trainsize", 
@@ -131,11 +131,11 @@ axis(1, at=1:5, labels=size)
 lines(1:5,runtime_nbsvm_clean, type = 'b', col="red", lty=2)
 legend("topleft",legend=c("cleaned","uncleaned"), col=c("red","black"),lty=c(2,1))
 
-plot(1:5,runtime_nb, type = 'b', main="Runtime on of NB different train size", xlab="Trainsize", 
-     ylim=c(50,2000), ylab="Time", xaxt="n")
-axis(1, at=1:5, labels=size)
-lines(1:5,runtime_nb_clean, type = 'b', col="red", lty=2)
-legend("topleft",legend=c("cleaned","uncleaned"), col=c("red","black"),lty=c(2,1))
+# plot(1:5,runtime_nb, type = 'b', main="Runtime on of NB different train size", xlab="Trainsize", 
+#      ylim=c(50,2000), ylab="Time", xaxt="n")
+# axis(1, at=1:5, labels=size)
+# lines(1:5,runtime_nb_clean, type = 'b', col="red", lty=2)
+# legend("topleft",legend=c("cleaned","uncleaned"), col=c("red","black"),lty=c(2,1))
 
 # scaled memory usage
 memory_nbsvm1=(read.table("./NBSVM_memory/nbsvm0.txt",sep=","))

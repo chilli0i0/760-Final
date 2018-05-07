@@ -17,7 +17,7 @@ df = df.reset_index(drop=True)
 def f():
     begin_time = time.time()
     # a random seed preset for train test splitting
-    X_train, X_test = train_test_split(df.loc[:, ['overall', 'reviewText']], train_size=size, test_size=300000,
+    X_train, X_test = train_test_split(df.loc[:, ['overall', 'summary']], train_size=size, test_size=300000,
                                        random_state=123)
 
     label_cols = ['1', '2', '3', '4', '5']
@@ -38,8 +38,8 @@ def f():
                           min_df=3, max_df=0.9, strip_accents='unicode', use_idf=1,
                           smooth_idf=1, sublinear_tf=1)
     # This creates a sparse matrix with only a small number of non-zero elements
-    trn_term_doc = vec.fit_transform(X_train['reviewText'])
-    test_term_doc = vec.transform(X_test['reviewText'])  # fit a tfid sparse matrix with the same parameters as the train set's
+    trn_term_doc = vec.fit_transform(X_train['summary'])
+    test_term_doc = vec.transform(X_test['summary'])  # fit a tfid sparse matrix with the same parameters as the train set's
 
     # vocab = vec.get_feature_names()  # Get the feature names of the vectorizer
 
