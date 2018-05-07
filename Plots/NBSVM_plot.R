@@ -86,10 +86,34 @@ max_memory_nb = c(3934.06640625,
                   8241.3125,
                   9699.23046875)
 
+
+# LSTM mse and runtime
+mse_lstm = c(1.40391,
+             0.971385,
+             0.624521,
+             0.507794,
+             0.358527)
+
+runtime_lstm = c(831.241733,
+                 1386.662537,
+                 5965.158794,
+                 11154.41401,
+                 14388.01753)
+
+max_memory_lstm = c(4279.773438,
+                    3417.707031,
+                    7244.527344,
+                    9501.976563,
+                    11828.60938)
+
+# logistic regression data
+logit = read.csv("./logit_result.csv")
+
+
 # comparison between cleaned and uncleaned data
 # it is interesting that the cleaned data does worse
-plot(1:5,apply(mse_nbsvm,2,mean), type = 'b', main="MSE on of NBSVM different train size", xlab="Trainsize", ylab="MSE",
-     ylim = c(0.4,1.2), xaxt="n")
+plot(1:5,apply(mse_nbsvm,2,mean), type = 'b', main=NULL, xlab="Trainsize", ylab="MSE",
+     ylim = c(0.4,0.9), xaxt="n")
 axis(1, at=1:5, labels=size)
 lines(1:5,mse_nbsvm_clean, type = 'b', col="red", lty=2)
 legend("topright",legend=c("cleaned","uncleaned"), col=c("red","black"),lty=c(2,1))
@@ -101,7 +125,7 @@ lines(1:5,mse_nb_clean, type = 'b', col="red", lty=2)
 legend("bottomright",legend=c("cleaned","uncleaned"), col=c("red","black"),lty=c(2,1))
 
 # runtime
-plot(1:5,apply(runtime_nbsvm,2,mean), type = 'b', main="Runtime on of NBSVM different train size", xlab="Trainsize", 
+plot(1:5,apply(runtime_nbsvm,2,mean), type = 'b', main=NULL, xlab="Trainsize", 
      ylim=c(50,2000), ylab="Time", xaxt="n")
 axis(1, at=1:5, labels=size)
 lines(1:5,runtime_nbsvm_clean, type = 'b', col="red", lty=2)
@@ -129,25 +153,34 @@ lines(seq(0,1,length.out = dim(memory_nb)[1]),t(memory_nb))
 # comparison between different methods
 
 # mse
-plot(1:5,mse_nbsvm_clean, type = 'b', main="MSE on different train size", xlab="Trainsize", ylab="MSE",
-     ylim = c(0.4,1.2), xaxt="n")
+plot(1:5,mse_nbsvm_clean, type = 'b', main=NULL, xlab="Trainsize", ylab="MSE",
+     ylim = c(0.3,1.5), xaxt="n")
 axis(1, at=1:5, labels=size)
 lines(1:5,mse_nb_clean, type = 'b', col="red", lty=2)
-legend("topright",legend=c("NB","NBSVM"), col=c("red","black"),lty=c(2,1))
+lines(1:5,mse_lstm, type = 'b', col="deepskyblue2", lty = 3)
+lines(1:5,logit$MSE, type = 'b', col="darkblue", lty = 4)
+legend("topright",legend=c("LR","LSTM","NB","NBSVM"),
+       col=c("darkblue","deepskyblue2","red","black"),lty=c(4,3,2,1))
 
 # time
-plot(1:5,runtime_nbsvm_clean, type = 'b', main="Runtime on different train size", xlab="Trainsize", 
-     ylim=c(50,2000), ylab="Time(s)", xaxt="n")
+plot(1:5,runtime_nbsvm_clean, type = 'b', main=NULL, xlab="Trainsize", 
+     ylim=c(50,15000), ylab="Time(s)", xaxt="n")
 axis(1, at=1:5, labels=size)
 lines(1:5,runtime_nb_clean, type = 'b', col="red", lty=2)
-legend("topleft",legend=c("NB","NBSBM"), col=c("red","black"),lty=c(2,1))
+lines(1:5,runtime_lstm, type = 'b', col="deepskyblue2", lty = 3)
+lines(1:5,logit$Time.sec., type = 'b', col="darkblue", lty = 4)
+legend("topleft",legend=c("LR","LSTM","NB","NBSVM"),
+       col=c("darkblue","deepskyblue2","red","black"),lty=c(4,3,2,1))
 
 # memory
-plot(1:5,max_memory_nbsvm_clean, type = 'b', main="Memory on different train size", xlab="Trainsize", 
-      ylab="Memory(MB)", xaxt="n")
+plot(1:5,max_memory_nbsvm_clean, type = 'b', main=NULL, xlab="Trainsize", 
+      ylab="Memory(MB)", xaxt="n",ylim = c(1000,12000))
 axis(1, at=1:5, labels=size)
 lines(1:5,max_memory_nb_clean, type = 'b', col="red", lty=2)
-legend("topleft",legend=c("NB","NBSVM"), col=c("red","black"),lty=c(2,1))
+lines(1:5,max_memory_lstm, type = 'b', col="deepskyblue2", lty = 3)
+lines(1:5,logit$Maximum.memory.usage, type = 'b', col="darkblue", lty = 4)
+legend("topleft",legend=c("LR","LSTM","NB","NBSVM"),
+       col=c("darkblue","deepskyblue2","red","black"),lty=c(4,3,2,1))
 
 
 
