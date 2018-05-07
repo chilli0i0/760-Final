@@ -1,0 +1,27 @@
+\begin{thebibliography}{}
+
+\bibitem[\protect\citeauthoryear{Lebret and Collobert}{2014}]{lebret2014n}
+Lebret, R., and Collobert, R.
+\newblock 2014.
+\newblock N-gram-based low-dimensional representation for document
+  classification.
+\newblock {\em arXiv preprint arXiv:1412.6277}.
+
+\bibitem[\protect\citeauthoryear{Pedregosa \bgroup et al\mbox.\egroup
+  }{2011}]{pedregosa2011scikit}
+Pedregosa, F.; Varoquaux, G.; Gramfort, A.; Michel, V.; Thirion, B.; Grisel,
+  O.; Blondel, M.; Prettenhofer, P.; Weiss, R.; Dubourg, V.; et~al.
+\newblock 2011.
+\newblock Scikit-learn: Machine learning in python.
+\newblock {\em Journal of machine learning research} 12(Oct):2825--2830.
+
+\bibitem[\protect\citeauthoryear{Wang and Manning}{2012}]{wang2012baselines}
+Wang, S., and Manning, C.~D.
+\newblock 2012.
+\newblock Baselines and bigrams: Simple, good sentiment and topic
+  classification.
+\newblock In {\em Proceedings of the 50th Annual Meeting of the Association for
+  Computational Linguistics: Short Papers-Volume 2},  90--94.
+\newblock Association for Computational Linguistics.
+
+\end{thebibliography}
