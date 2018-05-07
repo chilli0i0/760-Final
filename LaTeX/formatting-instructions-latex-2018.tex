@@ -38,8 +38,9 @@ importance of sentiment, existing method, compare to find,
 Nowadays, what people think is of great concern. Fortunately, with the growth of available opinion-rich resources, such as online review and blogs, and along with new technologies, such as machine learning and sentiment analysis, we are able to extract information from these resources and understand the opinions of others. However, it's not a easy task, as we have to teach machines to do what human brains do to understand others' comments.
 
 This project tends to compare multiple popular models used in sentiment analysis based on Amazon reviews. We will compare the running time, memory usage and accuracy of each model to find out when, where and which model fits best. 
+
 \subsection{Data Introduction}
-We get our data from Dr. Julian McAuley's Amazon dataset. The dataset contains product reviews and metadata from Amazon, including 142.8 million reviews spanning May 1996 - July 2014.The dataset includes reviews (ratings, text, helpfulness votes), product metadata (descriptions, category information, price, brand, and image features), and links (also viewed/also bought graphs). \par
+We get our data from Dr. Julian McAuley's \ref{he2016ups} Amazon dataset. The dataset contains product reviews and metadata from Amazon, including 142.8 million reviews spanning May 1996 - July 2014.The dataset includes reviews (ratings, text, helpfulness votes), product metadata (descriptions, category information, price, brand, and image features), and links (also viewed/also bought graphs). \par
 For our project, we choose the data only for electronics, which contains 1689188 reviews. Since our project focus on text classification. We only keep the review texts and ratings in the data. Table 1 is an example of the data.\par
 \begin{table}[htb]
 \caption{Example of Amazon Review Data} % title of Table
@@ -164,6 +165,7 @@ In this part, we will transfer the cleaned review texts into different kinds of 
 The first one is TF/IDF method. TF/IDF method basically gives one score for every word to vectorize the texts. In detail, we remove all words with occurrences under 3 in the whole text as well as frequency above 0.9 in the whole text. These two thresholds are learned from our previous project on text classification. What?s more, we consider both single words and the combination of two words.\par
 The second one is bag-of-word method. In this method, we just keep top 50000 frequent words and count their occurrence in every review. Again, the threshold 50000 is choose from the previous experience. Here are examples to show how final feature matrixes look like.
 
+
 \begin{table}[htb]
 \caption{Example of TF/IDF Feature Matrix} % title of Table
 \resizebox{\columnwidth}{!}{
@@ -225,6 +227,7 @@ It was out of our expectation that both NB and SVM, which we believed would do b
 \captionof{figure}{MSE of different methods}
 \end{center}
 
+% Tables need to be reshaped
 \begin{table}
 \centering
 \caption{Runtime of different methods in seconds}
