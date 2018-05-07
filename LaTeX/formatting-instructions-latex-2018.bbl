@@ -7,6 +7,16 @@ Lebret, R., and Collobert, R.
   classification.
 \newblock {\em arXiv preprint arXiv:1412.6277}.
 
+\bibitem[\protect\citeauthoryear{Pang, Lee, and
+  Vaithyanathan}{2002}]{pang2002thumbs}
+Pang, B.; Lee, L.; and Vaithyanathan, S.
+\newblock 2002.
+\newblock Thumbs up?: sentiment classification using machine learning
+  techniques.
+\newblock In {\em Proceedings of the ACL-02 conference on Empirical methods in
+  natural language processing-Volume 10},  79--86.
+\newblock Association for Computational Linguistics.
+
 \bibitem[\protect\citeauthoryear{Pedregosa \bgroup et al\mbox.\egroup
   }{2011}]{pedregosa2011scikit}
 Pedregosa, F.; Varoquaux, G.; Gramfort, A.; Michel, V.; Thirion, B.; Grisel,
@@ -14,6 +24,12 @@ Pedregosa, F.; Varoquaux, G.; Gramfort, A.; Michel, V.; Thirion, B.; Grisel,
 \newblock 2011.
 \newblock Scikit-learn: Machine learning in python.
 \newblock {\em Journal of machine learning research} 12(Oct):2825--2830.
+
+\bibitem[\protect\citeauthoryear{Rennie and Rifkin}{2001}]{rennie2001improving}
+Rennie, J.~D., and Rifkin, R.
+\newblock 2001.
+\newblock Improving multiclass text classification with the support vector
+  machine.
 
 \bibitem[\protect\citeauthoryear{Wang and Manning}{2012}]{wang2012baselines}
 Wang, S., and Manning, C.~D.
