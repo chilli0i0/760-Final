@@ -169,8 +169,14 @@ axis(1, at=1:5, labels=size)
 lines(1:5,runtime_nb_clean, type = 'b', col="red", lty=2)
 lines(1:5,runtime_lstm, type = 'b', col="deepskyblue2", lty = 3)
 lines(1:5,logit$Time.sec., type = 'b', col="darkblue", lty = 4)
-legend("topleft",legend=c("LR","LSTM","NB","NBSVM"),
-       col=c("darkblue","deepskyblue2","red","black"),lty=c(4,3,2,1))
+legend("topleft",legend=c("LR","NB","NBSVM","LSTM"),
+       col=c("darkblue","red","black","deepskyblue2"),lty=c(4,2,1,3))
+
+table = rbind(logit$Time.sec.,runtime_nb_clean,runtime_nbsvm_clean,runtime_lstm)
+rownames(table) = c("LR","NB","NBSVM","LSTM")
+colnames(table) = size
+
+write.csv(format(table,digits = 4),file = "./runtime_table.txt")
 
 # memory
 plot(1:5,max_memory_nbsvm_clean, type = 'b', main=NULL, xlab="Trainsize", 
@@ -179,8 +185,8 @@ axis(1, at=1:5, labels=size)
 lines(1:5,max_memory_nb_clean, type = 'b', col="red", lty=2)
 lines(1:5,max_memory_lstm, type = 'b', col="deepskyblue2", lty = 3)
 lines(1:5,logit$Maximum.memory.usage, type = 'b', col="darkblue", lty = 4)
-legend("topleft",legend=c("LR","LSTM","NB","NBSVM"),
-       col=c("darkblue","deepskyblue2","red","black"),lty=c(4,3,2,1))
+legend("topleft",legend=c("LR","NB","NBSVM","LSTM"),
+       col=c("darkblue","red","black","deepskyblue2"),lty=c(4,2,1,3))
 
 
 

@@ -45,4 +45,3 @@ MSE Time (sec) Max memory usage (MB)
 ## 1300000
 
 1.0139866666666666  479.7275142669678 Maximum memory usage: 9699.23046875
-
