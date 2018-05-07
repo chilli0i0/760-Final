@@ -29,7 +29,7 @@ def f():
     
     begin_time = time.time()
     
-    X_train, X_test, y_train, y_test = train_test_split(X_all, Y_all, train_size=size, test_size=30000, random_state=123)
+    X_train, X_test, y_train, y_test = train_test_split(X_all, Y_all, train_size=size, test_size=300000, random_state=123)
     
     inputs = Input(shape=(X_train.shape[1], ))
     x = Embedding(max_words+1,128)(inputs)
@@ -44,7 +44,7 @@ def f():
     y_test0 = y_test[:,0] + 2*y_test[:,1] + 3*y_test[:,2] + 4*y_test[:,3] + 5*y_test[:,4]
     index1 = reuslt2>5
     reuslt2[index1] = 5
-    mse = np.sum(np.square(reuslt2-y_test0))/30000
+    mse = np.sum(np.square(reuslt2-y_test0))/300000
     print(mse)
     
     end_time = time.time()
