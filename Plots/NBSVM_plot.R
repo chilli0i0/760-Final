@@ -106,6 +106,8 @@ max_memory_lstm = c(4279.773438,
                     9501.976563,
                     11828.60938)
 
+lstm = read.csv("./LSTM_result/lstm_result.csv")
+
 # logistic regression data
 logit = read.csv("./Logit_result/logit_result_clean.csv")
 
@@ -142,10 +144,19 @@ dev.off()
 # legend("topleft",legend=c("cleaned","uncleaned"), col=c("red","black"),lty=c(2,1))
 
 # scaled memory usage
-memory_nbsvm1=(read.table("./NBSVM_memory/nbsvm0.txt",sep=","))
-memory_nbsvm2=read.table("./NBSVM_memory/nbsvm_new0.txt",sep=",")
-memory_nbsvm_clean=read.table("./NBSVM_memory/nbsvm_new_clean0.txt",sep=",")
-memory_nb_clean=read.table("./NB_memory/nb0.txt",sep=",")
+# memory_nbsvm1=(read.table("./NBSVM_memory/nbsvm0.txt",sep=","))
+# memory_nbsvm2=read.table("./NBSVM_memory/nbsvm_new0.txt",sep=",")
+
+memory_nbsvm_clean=NULL
+for(i in 0:3){
+  memory_nbsvm_clean = c(memory_nbsvm_clean,mean(t(read.table(paste0("./NBSVM_memory/nbsvm_new_clean",i,".txt"),sep=","))))
+}
+memory_nbsvm_clean = c(memory_nbsvm_clean, 6010.242)
+
+memory_nb_clean=NULL
+for(i in 0:4){
+  memory_nb_clean = c(memory_nb_clean,mean(t(read.table(paste0("./NB_memory/nb_new",i,".txt"),sep=","))))
+}
 
 plot(seq(0,1,length.out = dim(memory_nbsvm1)[1]),t(memory_nbsvm1), type = 'l', ylim = c(1500,5000),
      main="A strange example on two runs of memory\n with sample size of 50000",
@@ -204,4 +215,13 @@ legend("topleft",legend=c("LR","NB","NBSVM","LSTM"),
        col=c("darkblue","red","black","deepskyblue2"),lty=c(4,2,1,3), lwd=2)
 dev.off()
 
-
+jpeg("./Plots/Compare_avg_memory.jpeg")
+plot(1:5,(memory_nbsvm_clean), type = 'b', main=NULL, xlab="Trainsize", 
+     ylab="Memory(MB)", xaxt="n",ylim = c(1000,12000), lwd=2,cex.lab=1.2)
+axis(1, at=1:5, labels=size)
+lines(1:5,(memory_nb_clean), type = 'b', col="red", lty=2, lwd=2)
+lines(1:5,lstm$Average.memory.usage, type = 'b', col="deepskyblue2", lty = 3, lwd=2)
+lines(1:5,logit$Average.memory.usage, type = 'b', col="darkblue", lty = 4, lwd=2)
+legend("topleft",legend=c("LR","NB","NBSVM","LSTM"),
+       col=c("darkblue","red","black","deepskyblue2"),lty=c(4,2,1,3), lwd=2)
+dev.off()
